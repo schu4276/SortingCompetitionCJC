@@ -12,6 +12,8 @@ import java.util.List;
 import java.math.BigInteger;
 import java.util.*;
 
+// The isprime number algorithm is based off the following algorithm:
+// https://www.geeksforgeeks.org/program-to-find-the-next-prime-number/
 public class Group1 {
     public static void main(String[] args) throws InterruptedException, FileNotFoundException, IOException {
         // testing the comparator:
@@ -34,16 +36,9 @@ public class Group1 {
         Thread.sleep(10); // to let other things finish before timing; adds stability of runs
 
         long start = System.currentTimeMillis(); // Begin the timing
-        sorted = improvedSort(toSort);
-        long end = System.currentTimeMillis(); // End the timing
-        System.out.println(end - start);
-
-        start = System.currentTimeMillis(); // Begin the timing
         sorted = sort(toSort);
-        end = System.currentTimeMillis(); // End the timing
-        
-
-
+        long end = System.currentTimeMillis(); // End the timing
+            
         System.out.println(end - start); // Report the results
         writeOutResult(sorted, outFileName);
     }
@@ -65,16 +60,7 @@ public class Group1 {
         return toSortData;
     }
 
-    // our new sorting method
-    private static Data[] improvedSort(String[] toSort) {
-        Data[] toSortData = new Data[toSort.length];
-        for (int i = 0; i < toSort.length; ++i){
-            toSortData[i] = new Data(toSort[i]);
-        }    
-        Quicksort quick = new Quicksort(); 
-        Group1.Quicksort.randomizedQuickSort(toSortData, 0, toSortData.length - 1);
-        return toSortData;
-    }
+    
     // public static class InsertionSort { 
     //     GematriaComparator comparator = new GematriaComparator();
     //     /*Function to sort array using insertion sort*/
@@ -137,6 +123,7 @@ public class Group1 {
 
 
     }// end quicksort class
+  
 
     public static class Heapsort {    
         // Constructor
@@ -186,11 +173,11 @@ public class Group1 {
 
     }// end heapsort class
 
-    private static void printArray(String[] Arr, int n) {
-        for (int i = 0; i < n; i++) {
-            System.out.println(Arr[i]);
-        }
-    }
+    // private static void printArray(String[] Arr, int n) {
+    //     for (int i = 0; i < n; i++) {
+    //         System.out.println(Arr[i]);
+    //     }
+    // }
 
     private static String[] readData(String inFile) throws FileNotFoundException, IOException {
         List<String> input = Files.readAllLines(Paths.get(inFile));
@@ -207,32 +194,50 @@ public class Group1 {
     }
 
     private static class GematriaComparator implements Comparator<Data> {
-        public long toVal(char ch) { // This function is an ancient evil that has no place in a unicode-based world :(
+        public int toVal(char ch) { // This function is an ancient evil that has no place in a unicode-based world :(
             return (int) ch - (int) 'a' + 1; // type-casting a ch to (int) turns it into an ascii value
         } // Warning: this will work with non-lower-case ascii characters too.
 
-        public long gematrify(String str) {
+        public int gematrify(String str) {
             char[] ch = str.toCharArray();
-            long gematria = 0;
-            long multiplier = 1;
+            int gematria = 0;
+            int multiplier = 1;
             for (int i = str.length() - 1; i >= 0; i--) { // Work from the right to the left
                 gematria += toVal(ch[i]) * multiplier;
                 multiplier = 2 * multiplier;
             }
             return gematria;
         }
+        
+        // new is prime method this algorithm is based off of algorithm from https://www.geeksforgeeks.org/program-to-find-the-next-prime-number/ 
+        static boolean isPrime(long n) {  
+        // Corner cases  
+        if (n <= 1) return false;  
+        if (n <= 3) return true;  
+          
+        // This is checked so that we can skip  
+        // middle five numbers in below loop  
+        if (n % 2 == 0 || n % 3 == 0) return false;  
+          
+        for (int i = 5; i * i <= n; i = i + 6)  
+            if (n % i == 0 || n % (i + 2) == 0)  
+            return false;  
+          
+        return true;  
+        }  
 
-        boolean isPrime(long n) {
-            for (int i = 2; i <= Math.sqrt(n); i++) {
-                if (n % i == 0) {
-                    return false;
-                }
-            }
-            return true;
-        }
 
-        long nextPrime(long n) {
-            long m = n;
+        // boolean isPrime(long n) {
+        //     for (int i = 2; i <= Math.sqrt(n); i++) {
+        //         if (n % i == 0) {
+        //             return false;
+        //         }
+        //     }
+        //     return true;
+        // }
+        
+        int nextPrime(int n) {
+            int m = n;
             while (true) { // In a worst-case scenario we'll run out of values for m... if we don't throw
                            // an exception we'll wrap around to the negatives. We'll find a prime
                            // eventually
@@ -245,13 +250,13 @@ public class Group1 {
 
         @Override
         public int compare(Data s1, Data s2) {
-            long g1 = gematrify(s1.word);
-            long g2 = gematrify(s2.word);
+            int g1 = gematrify(s1.word); //change long to int
+            int g2 = gematrify(s2.word); //change long to int
 
             if (g1 == g2) {
                 return s1.word.compareTo(s2.word);
             } // in case of tie, compare lexicographically
-            long p = 2;
+            int p = 2; //change long to int
             boolean done = false;
             boolean d1 = false;
             boolean d2 = false;
