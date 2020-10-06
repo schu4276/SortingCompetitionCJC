@@ -90,7 +90,6 @@ public class Group1 {
         }//end quicksort 
         
         public static int randomPartition(Data[] a, int low, int high){
-            Random rand = new Random();
             int randIndex = (int)(Math.random() * (high - low + 1) + low);
             // Swap random partition with a[high]		
             a[high] = a[randIndex];
@@ -245,8 +244,12 @@ public class Group1 {
                 if (isPrime(m)) {
                     return (m);
                 }
+               
             }
         }
+        
+      
+
 
         @Override
         public int compare(Data s1, Data s2) {
@@ -268,6 +271,16 @@ public class Group1 {
                 if (g2 == 1) {
                     return (1);
                 }
+                // I (cassie) put these lines in here in an effort to 
+                // cut down the number of times the while loop is run. 
+                //trying stuff out 
+                if(isPrime(g1) == true && isPrime(g2) == true && g1 > g2){
+                    return (1);
+                }
+                if(isPrime(g1) == true && isPrime(g2) == true && g1 < g2){
+                    return (-1);
+                }
+                //
                 // We know that g1 AND g2 have unprocessed divisors
                 d1 = (g1 % p == 0); // d1 is a BOOLEAN value
                 d2 = (g2 % p == 0); // d2 is a BOOLEAN VALUE
