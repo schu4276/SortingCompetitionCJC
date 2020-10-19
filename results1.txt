@@ -1635,3 +1635,7 @@ Median: 1273.0
 Results of diff:
 
 Files outRun1Group13.txt and outRun1Group0.txt differ
+'' 
+'' 
+'' 
+'Median: 0.0' 

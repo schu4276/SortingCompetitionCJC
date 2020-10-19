@@ -14,6 +14,7 @@ import java.util.List;
 
 // The isprime number algorithm is based off the following algorithm:
 // https://www.geeksforgeeks.org/program-to-find-the-next-prime-number/
+// Mergesort is based off of merge sort as described in CLRS textbook, we did not come up with merge sort algorithm
 public class Group1 {
     public static void main(String[] args) throws InterruptedException, FileNotFoundException, IOException {
         // testing the comparator:
@@ -38,9 +39,67 @@ public class Group1 {
         long start = System.currentTimeMillis(); // Begin the timing
         sorted = sort(toSort);
         long end = System.currentTimeMillis(); // End the timing
-        System.out.println(end - start); // Report the results
+        System.out.println(end - start + "tim"); 
+        start = System.currentTimeMillis(); // Begin the timing
+        sorted = trysort(toSort);
+        end = System.currentTimeMillis();
+        System.out.println(end - start+ "merge"); // Report the results
         writeOutResult(sorted, outFileName);
     }
+
+    
+    public static class MergeSort { 
+        void merge(Data arr[], int l, int m, int r) { 
+            
+            GematriaComparator comparator = new GematriaComparator();
+            int n1 = m - l + 1; 
+            int n2 = r - m; 
+      
+            Data L[] = new Data[n1]; 
+            Data R[] = new Data[n2]; 
+
+            for (int i = 0; i < n1; ++i) 
+                L[i] = arr[l + i]; 
+            for (int j = 0; j < n2; ++j) 
+                R[j] = arr[m + 1 + j]; 
+      
+            int i = 0, j = 0; 
+            int k = l; 
+            while (i < n1 && j < n2) { 
+                if (comparator.compare(L[i], R[j]) <0) { 
+                    arr[k] = L[i]; 
+                    i++; 
+                } 
+                else { 
+                    arr[k] = R[j]; 
+                    j++; 
+                } 
+                k++; 
+            } 
+            while (i < n1) { 
+                arr[k] = L[i]; 
+                i++; 
+                k++; 
+            } 
+            while (j < n2) { 
+                arr[k] = R[j]; 
+                j++; 
+                k++; 
+            } 
+        } 
+      
+        void msort(Data arr[], int l, int r) {   
+            if (l < r) { 
+                int m = (l + r) / 2; 
+                msort(arr, l, m); 
+                msort(arr, m + 1, r); 
+                merge(arr, l, m, r); 
+            } 
+        } 
+      
+
+    } 
+    
 
     // YOUR SORTING METHOD GOES HERE.
     // You may call other methods and use other classes.
@@ -58,12 +117,17 @@ public class Group1 {
         Arrays.sort(toSortData, new GematriaComparator());
         return toSortData;
     }
-
-    // private static void printArray(String[] Arr, int n) {
-    //     for (int i = 0; i < n; i++) {
-    //         System.out.println(Arr[i]);
-    //     }
-    // }
+    private static Data[] trysort(String[] toSort) {
+        Data[] toSortData = new Data[toSort.length];
+        for (int i = 0; i < toSort.length; ++i) {
+            toSortData[i] = new Data(toSort[i]);
+        }
+        MergeSort mergy = new MergeSort();
+        mergy.msort(toSortData, 0,toSortData.length - 1);
+        return toSortData;
+    }
+   
+  
 
     private static String[] readData(String inFile) throws FileNotFoundException, IOException {
         List<String> input = Files.readAllLines(Paths.get(inFile));
@@ -163,7 +227,6 @@ public class Group1 {
                 }
                 // I (cassie) put these lines in here in an effort to 
                 // cut down the number of times the while loop is run. 
-                //trying stuff out 
                 if(isPrime(g1) == true && isPrime(g2) == true && g1 > g2){
                     return (1);
                 }
@@ -193,6 +256,10 @@ public class Group1 {
             return (0); // This should NEVER happen
         }
     }
+   
+
+
+
 
     private static class Data {
         public String word; // The original string-- useful to outputting at the end.
@@ -200,6 +267,7 @@ public class Group1 {
         public Data(String inWord) {
             word = new String(inWord); // Make a copy of the string
         }
+        
 
         public static void print_test(String s1, String s2) {
             Data testItem1 = new Data(s1);
