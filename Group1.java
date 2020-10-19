@@ -1,16 +1,16 @@
-import java.io.File;
+// import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Scanner;
+// import java.util.Scanner;
 import java.util.List;
-import java.math.BigInteger;
-import java.util.*;
+// import java.math.BigInteger;
+// import java.util.*;
 
 // The isprime number algorithm is based off the following algorithm:
 // https://www.geeksforgeeks.org/program-to-find-the-next-prime-number/
@@ -94,7 +94,7 @@ public class Group1 {
             }
             return gematria;
         }
-        
+       
         // new is prime method this algorithm is based off of algorithm from https://www.geeksforgeeks.org/program-to-find-the-next-prime-number/ 
         static boolean isPrime(long n) {  
         // Corner cases  
@@ -105,7 +105,7 @@ public class Group1 {
         // middle five numbers in below loop  
         if (n % 2 == 0 || n % 3 == 0) return false;  
           
-        for (int i = 5; i * i <= n; i = i + 6)  
+        for (int i = 5; i * i <= n; i = i + 7) //COOKIE changing 6 to 7 here since 6 is captured by 3
             if (n % i == 0 || n % (i + 2) == 0)  
             return false;  
           
