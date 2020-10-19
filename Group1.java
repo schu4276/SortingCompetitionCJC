@@ -38,7 +38,6 @@ public class Group1 {
         long start = System.currentTimeMillis(); // Begin the timing
         sorted = sort(toSort);
         long end = System.currentTimeMillis(); // End the timing
-            
         System.out.println(end - start); // Report the results
         writeOutResult(sorted, outFileName);
     }
@@ -59,118 +58,6 @@ public class Group1 {
         Arrays.sort(toSortData, new GematriaComparator());
         return toSortData;
     }
-
-    
-    // public static class InsertionSort { 
-    //     GematriaComparator comparator = new GematriaComparator();
-    //     /*Function to sort array using insertion sort*/
-    //     public void sort(Data[] arr){ 
-    //         int n = arr.length;
-    //         System.out.println(n);
-    //         for (int j =1; j < n; j++) {
-    //         Data key = arr[j];
-    //         int i = j -1;
-    //             while((i > -1) && (comparator.compare(arr[i],key) > 0)) {
-    //                 arr[i + 1] = arr[i];
-    //                 i = i -1;
-    //                 arr[i + 1] = key;
-    //             }
-    //         }
-    //     }
-      
-    // }
-    public static class Quicksort{
-        public Quicksort(){}
-        public static void randomizedQuickSort(Data[] a, int low, int high){
-            if(low < high){
-                int q = randomPartition(a, low, high);
-                randomizedQuickSort(a,low, q-1);
-                randomizedQuickSort(a,q+1,high);
-            }
-        }//end quicksort 
-        
-        public static int randomPartition(Data[] a, int low, int high){
-            int randIndex = (int)(Math.random() * (high - low + 1) + low);
-            // Swap random partition with a[high]		
-            a[high] = a[randIndex];
-            return partition(a,low,high);
-        }//end partition
-        public static int partition(Data[] a, int low, int high){
-            // testing prints
-            GematriaComparator comparator = new GematriaComparator();
-            Data pivot = a[high];
-    
-            int index = (low -1);
-            Data temp = new Data("");
-            for(int i = low; i< high; i++){
-                // if curr element is smaller than pivot
-                if(comparator.compare(a[i],pivot) < 0){
-
-                    index++;
-                    temp = a[index];
-                    a[index] = a[i];
-                    a[i] = temp;
-                }
-            }
-            temp = a[index+1];
-            a[index+1] = a[high];
-            a[high] = temp;
-            return(index+1);
-        }//end partition
-
-
-
-
-    }// end quicksort class
-  
-
-    public static class Heapsort {    
-        // Constructor
-        public Heapsort() {  }
-
-        public void hsort(Data arr[]) {
-            int n = arr.length;
-            // Building Heap
-            for (int i = n / 2 - 1; i >= 0; i--) {
-                heapify(arr, n, i);
-            }
-            for (int i=n-1; i>0; i--) { 
-            // Move current root to end 
-            Data temp = arr[0]; 
-            arr[0] = arr[i]; 
-            arr[i] = temp; 
-            // call max heapify on the reduced heap 
-            heapify(arr, i, 0); 
-            } 
-
-        }
-        public void heapify(Data arr[], int n, int i) {
-            GematriaComparator comparator = new GematriaComparator();
-            int largest = i; // Initialize largest as root
-            int l = 2 * i + 1; // left = 2*i + 1
-            int r = 2 * i + 2; // right = 2*i + 2
-
-            // If left child is larger than root
-            if (l < n && comparator.compare(arr[l], arr[largest]) > 0){
-                largest = l;
-            }
-            // If right child is larger than largest so far
-            if (r < n && comparator.compare(arr[r], arr[largest]) > 0){
-                largest = r;
-            }
-            // If largest is not root
-            if (largest != i) {
-                Data swap = arr[i];
-                arr[i] = arr[largest];
-                arr[largest] = swap;
-
-                // Recursively heapify the affected sub-tree
-                heapify(arr, n, largest);
-            }
-        }
-
-
-    }// end heapsort class
 
     // private static void printArray(String[] Arr, int n) {
     //     for (int i = 0; i < n; i++) {
@@ -199,7 +86,7 @@ public class Group1 {
 
         public int gematrify(String str) {
             char[] ch = str.toCharArray();
-            int gematria = 0;
+            int gematria = 0; //COOKIE changed these long variables to integers 
             int multiplier = 1;
             for (int i = str.length() - 1; i >= 0; i--) { // Work from the right to the left
                 gematria += toVal(ch[i]) * multiplier;
@@ -236,15 +123,18 @@ public class Group1 {
         // }
         
         int nextPrime(int n) {
-            int m = n;
+            //int m = n;
             while (true) { // In a worst-case scenario we'll run out of values for m... if we don't throw
                            // an exception we'll wrap around to the negatives. We'll find a prime
                            // eventually
-                m = m + 1;
-                if (isPrime(m)) {
-                    return (m);
+                n = n+1; //COOKIE changed it so we don't have to reassign n as m
+                //m = m + 1;
+                // if (isPrime(m)) {
+                //     return (m);
+                // }
+                if (isPrime(n)){
+                    return (n);
                 }
-               
             }
         }
         
