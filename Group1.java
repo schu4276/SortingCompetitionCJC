@@ -39,11 +39,7 @@ public class Group1 {
         long start = System.currentTimeMillis(); // Begin the timing
         sorted = sort(toSort);
         long end = System.currentTimeMillis(); // End the timing
-        System.out.println(end - start + "tim"); 
-        start = System.currentTimeMillis(); // Begin the timing
-        sorted = trysort(toSort);
-        end = System.currentTimeMillis();
-        System.out.println(end - start+ "merge"); // Report the results
+        System.out.println(end - start); 
         writeOutResult(sorted, outFileName);
     }
 
@@ -109,15 +105,20 @@ public class Group1 {
     // Note: you may change the return type of the method.
     // You would need to provide your own function that prints your sorted array to
     // a file in the exact same format that my program outputs
+
+    // Peter's provided sorting method (commented out because we arent using)
+    // private static Data[] sort(String[] toSort) {
+    //     Data[] toSortData = new Data[toSort.length];
+    //     for (int i = 0; i < toSort.length; ++i) {
+    //         toSortData[i] = new Data(toSort[i]);
+    //     }
+    //     Arrays.sort(toSortData, new GematriaComparator());
+    //     return toSortData;
+    // }
+
+
+    // Our sorting method
     private static Data[] sort(String[] toSort) {
-        Data[] toSortData = new Data[toSort.length];
-        for (int i = 0; i < toSort.length; ++i) {
-            toSortData[i] = new Data(toSort[i]);
-        }
-        Arrays.sort(toSortData, new GematriaComparator());
-        return toSortData;
-    }
-    private static Data[] trysort(String[] toSort) {
         Data[] toSortData = new Data[toSort.length];
         for (int i = 0; i < toSort.length; ++i) {
             toSortData[i] = new Data(toSort[i]);
@@ -164,12 +165,10 @@ public class Group1 {
         // Corner cases  
         if (n <= 1) return false;  
         if (n <= 3) return true;  
-          
-        // This is checked so that we can skip  
-        // middle five numbers in below loop  
+
         if (n % 2 == 0 || n % 3 == 0) return false;  
-          
-        for (int i = 5; i * i <= n; i = i + 7) //COOKIE changing 6 to 7 here since 6 is captured by 3
+
+        for (int i = 5; i * i <= n; i = i + 6) 
             if (n % i == 0 || n % (i + 2) == 0)  
             return false;  
           
@@ -187,18 +186,13 @@ public class Group1 {
         // }
         
         int nextPrime(int n) {
-            //int m = n;
-            while (true) { // In a worst-case scenario we'll run out of values for m... if we don't throw
-                           // an exception we'll wrap around to the negatives. We'll find a prime
-                           // eventually
-                n = n+1; //COOKIE changed it so we don't have to reassign n as m
-                //m = m + 1;
-                // if (isPrime(m)) {
-                //     return (m);
-                // }
-                if (isPrime(n)){
-                    return (n);
+            int m = n;
+            while (true) { 
+                m = m + 1;
+                if (isPrime(m)) {
+                    return (m);
                 }
+            
             }
         }
         
@@ -225,7 +219,7 @@ public class Group1 {
                 if (g2 == 1) {
                     return (1);
                 }
-                // I (cassie) put these lines in here in an effort to 
+                // we put these lines in here in an effort to 
                 // cut down the number of times the while loop is run. 
                 if(isPrime(g1) == true && isPrime(g2) == true && g1 > g2){
                     return (1);
